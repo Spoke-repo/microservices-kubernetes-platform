@@ -30,9 +30,12 @@ java -jar user-service/target/app.jar
 ```
 
 ## Deploy to Azure
-1. `cd infra && cp terraform.tfvars.example terraform.tfvars` (edit values)
-2. `terraform init -backend-config=backend.tfvars && terraform apply`
-3. In the gateway app settings add `USER_URL`, `CUSTOMER_URL`, ... (the https URLs from `terraform output app_urls`).
-4. Add GitHub secrets `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_SUBSCRIPTION_ID` (OIDC) and push to `main`.
+Infrastructure (App Service, Key Vault, Postgres) lives in a separate repo.
+This repo only builds and deploys the apps via `.github/workflows/deploy.yml`.
 
-Env vars used by every service: `DB_URL`, `DB_USER`, `DB_PASSWORD` (from Key Vault), `PORT`.
+Add these GitHub secrets (Settings → Secrets and variables → Actions):
+`AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_SUBSCRIPTION_ID`.
+
+Each service needs env vars: `DB_URL`, `DB_USER`, `DB_PASSWORD`, `PORT`.
+The gateway also needs `USER_URL`, `CUSTOMER_URL`, `PRODUCT_URL`, `INVENTORY_URL`,
+`ORDER_URL`, `PAYMENT_URL`, `NOTIFICATION_URL`, `SHIPPING_URL`, `REPORT_URL`.

@@ -1,9 +1,5 @@
 target/
 .idea/
 *.iml
-.terraform/
-*.tfstate*
 *.log
 nohup.out
-infra/backend.tfvars
-infra/terraform.tfvars
